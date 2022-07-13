@@ -16,6 +16,26 @@ class LoginView: UIView {
         return textfield
     }()
     
+    let passwordTextField: UITextField = {
+        let textfield = UITextField()
+        textfield.placeholder = "Password"
+        textfield.translatesAutoresizingMaskIntoConstraints = false
+        //password로 SecureTextEntry임.
+        textfield.isSecureTextEntry = true
+        return textfield
+    }()
+    
+    let stackView:UIStackView = {
+        let stack = UIStackView()
+        //const 사용하기위해 false
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        //방향
+        stack.axis = .vertical
+        //스택뷰끼리 간격
+        stack.spacing = 8
+        return stack
+    }()
+    
     
     //MARK: - Init
     override init(frame: CGRect) {
@@ -29,9 +49,9 @@ class LoginView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
         //기본 CGSize지정.
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 200, height: 200)
-    }
+//    override var intrinsicContentSize: CGSize {
+//        return CGSize(width: 200, height: 200)
+//    }
     
     //MARK: - Configures
 
@@ -40,16 +60,23 @@ class LoginView: UIView {
 extension LoginView {
     func style() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemPink
+        backgroundColor = .systemOrange
         usernameTextField.delegate = self
-        addSubview(usernameTextField)
-        
+        passwordTextField.delegate = self
     }
+
     func layout() {
+        addSubview(stackView)
+        //스택뷰에 들어올 것들을 여기에 추가해준다.
+        stackView.addArrangedSubview(usernameTextField)
+        stackView.addArrangedSubview(passwordTextField)
+        
+        
         NSLayoutConstraint.activate([
-            usernameTextField.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 1),
-            usernameTextField.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1),
-            trailingAnchor.constraint(equalToSystemSpacingAfter: usernameTextField.trailingAnchor, multiplier: 1)
+            stackView.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 1),
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1),
+            trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 1),
+            bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 1)
         ])
         
     }
@@ -60,6 +87,7 @@ extension LoginView:UITextFieldDelegate {
     //텍스트필드 사용을 마치고 return하면 endEdting이 실행
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         usernameTextField.endEditing(true)
+        passwordTextField.endEditing(true)
         return true
     }
     
