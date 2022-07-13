@@ -13,6 +13,20 @@ class LoginViewController: UIViewController {
     //만들었던 기본적인 loginview를 인스턴스화 시킨다.
     let loginView = LoginView()
     
+    let signButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Sign In", for: [])
+        button.configuration = .filled()
+        button.configuration?.imagePadding = 8
+        button.addTarget(self, action: #selector(signinTapped), for: .primaryActionTriggered)
+        return button
+    }()
+    
+
+    
+    
+    
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,18 +39,34 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController {
+    @objc func signinTapped(sender: UIButton) {
+        print("Sign in tapped")
+    }
+    
     private func style() {
         //로그인뷰를 자유자재로 움직일 수 있도록 false해줌.
         loginView.translatesAutoresizingMaskIntoConstraints = false
+        
     }
     private func layout() {
         view.addSubview(loginView)
+        view.addSubview(signButton)
         
         //layout 을 active시켜준다.
+        //login View
         NSLayoutConstraint.activate([
             loginView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             loginView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 1),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: loginView.trailingAnchor, multiplier: 1)
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: loginView.trailingAnchor, multiplier: 1),
+            
+        ])
+        //Sign Button
+        NSLayoutConstraint.activate([
+            signButton.topAnchor.constraint(equalToSystemSpacingBelow: loginView.bottomAnchor, multiplier: 2),
+            signButton.leadingAnchor.constraint(equalTo: loginView.leadingAnchor),
+            signButton.trailingAnchor.constraint(equalTo: loginView.trailingAnchor),
+            signButton.heightAnchor.constraint(equalTo: loginView
+                .heightAnchor, multiplier: 1 / 2)
         ])
     }
     
