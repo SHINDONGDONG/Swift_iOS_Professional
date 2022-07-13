@@ -23,6 +23,17 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    let errorMessage: UILabel = {
+        let error = UILabel()
+        error.text = nil
+        error.isHidden = true
+        error.textAlignment = .center
+        error.translatesAutoresizingMaskIntoConstraints  = false
+        error.textColor = .systemRed
+        error.numberOfLines = 0
+        return error
+    }()
+    
 
     
     
@@ -40,7 +51,6 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     @objc func signinTapped(sender: UIButton) {
-        print("Sign in tapped")
     }
     
     private func style() {
@@ -51,6 +61,7 @@ extension LoginViewController {
     private func layout() {
         view.addSubview(loginView)
         view.addSubview(signButton)
+        view.addSubview(errorMessage)
         
         //layout 을 active시켜준다.
         //login View
@@ -67,6 +78,13 @@ extension LoginViewController {
             signButton.trailingAnchor.constraint(equalTo: loginView.trailingAnchor),
             signButton.heightAnchor.constraint(equalTo: loginView
                 .heightAnchor, multiplier: 1 / 2)
+        ])
+        //ErrorMessage
+        NSLayoutConstraint.activate([
+            errorMessage.topAnchor.constraint(equalToSystemSpacingBelow: signButton.bottomAnchor, multiplier: 2),
+            errorMessage.leadingAnchor.constraint(equalTo: signButton.leadingAnchor),
+            errorMessage.trailingAnchor.constraint(equalTo: signButton.trailingAnchor),
+            
         ])
     }
     
