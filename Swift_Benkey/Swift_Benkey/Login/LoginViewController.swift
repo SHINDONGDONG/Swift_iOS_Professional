@@ -34,6 +34,14 @@ class LoginViewController: UIViewController {
         return error
     }()
     
+    var username: String? {
+        return loginView.usernameTextField.text
+    }
+    
+    var password: String? {
+        return loginView.passwordTextField.text
+    }
+    
 
     
     
@@ -51,6 +59,28 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     @objc func signinTapped(sender: UIButton) {
+        errorMessage.isHidden = true
+        login()
+    }
+    
+    private func login() {
+        guard let username = username,!username.isEmpty, let password = password,!password.isEmpty else {
+            //비어있을 때 아래의 메세지를
+            configureView(withMessage: "절대로 두개중 하나가 비어있으면 안됩니다.")
+            return
+        }
+            //username과 password가 일치하면 signbutton에 indicator를 돌린다.
+            if username == "Kevin" && password == "1234" {
+                signButton.configuration?.showsActivityIndicator = true
+            } else {
+                //일치하지 않으면 메세지를 출력
+                configureView(withMessage: "User name 혹은 Password를 확인해주세요.")
+            }
+    }
+    
+     private func configureView(withMessage  message: String) {
+        errorMessage.isHidden = false
+        errorMessage.text = message
     }
     
     private func style() {
