@@ -25,6 +25,13 @@ class LoginView: UIView {
         return textfield
     }()
     
+    let dividerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .secondarySystemFill
+        return view
+    }()
+    
     let stackView:UIStackView = {
         let stack = UIStackView()
         //const 사용하기위해 false
@@ -60,16 +67,22 @@ class LoginView: UIView {
 extension LoginView {
     func style() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemOrange
+        backgroundColor = .secondarySystemBackground
         usernameTextField.delegate = self
         passwordTextField.delegate = self
+        //layer.cornerRaidus 는 모서리를 둥글게
+        layer.cornerRadius = 10
+        //다른배경을 자르거나 주위를 자르는것을 의미 clipstoBounds
+        clipsToBounds = true
     }
 
     func layout() {
         addSubview(stackView)
         //스택뷰에 들어올 것들을 여기에 추가해준다.
         stackView.addArrangedSubview(usernameTextField)
+        stackView.addArrangedSubview(dividerView)
         stackView.addArrangedSubview(passwordTextField)
+        
         
         
         NSLayoutConstraint.activate([
@@ -79,6 +92,8 @@ extension LoginView {
             bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 1)
         ])
         
+        //구분선을 height 1로 주고 active를 true로 한다.
+        dividerView.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
 }
 
