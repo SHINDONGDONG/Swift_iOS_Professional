@@ -24,9 +24,9 @@ class OnboardingContainerViewController: UIViewController {
         self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 
         //viewcontroller들을 페이지로 담아준다.
-        let page1 = ViewController1()
-        let page2 = ViewController2()
-        let page3 = ViewController3()
+        let page1 = OnboardingViewController(heroImageName: "delorean", titleText: "1abcdef")
+        let page2 = OnboardingViewController(heroImageName: "thumbs", titleText: "2abcdef")
+        let page3 = OnboardingViewController(heroImageName: "world", titleText: "3abcdef")
 
         //위에서 선언한 pages에 담아준다.
         pages.append(page1)
@@ -111,27 +111,5 @@ extension OnboardingContainerViewController: UIPageViewControllerDataSource {
     //pageviewcontroller의 첫번재 인덱스를 설정해준다.
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return pages.firstIndex(of: self.currentVC) ?? 0
-    }
-}
-
-// MARK: - ViewControllers
-class ViewController1: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemRed
-    }
-}
-
-class ViewController2: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemGreen
-    }
-}
-
-class ViewController3: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBlue
     }
 }

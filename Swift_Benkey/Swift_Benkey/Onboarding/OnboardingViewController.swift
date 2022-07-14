@@ -14,6 +14,8 @@ class OnboardingViewController: UIViewController {
     let stackView = UIStackView()
     let label = UILabel()
     let imageView = UIImageView()
+    let heroImageName: String
+    let titleText: String
     
     
     //MARK: - Init
@@ -22,20 +24,33 @@ class OnboardingViewController: UIViewController {
         style()
         layout()
     }
+    
+    init(heroImageName: String, titleText: String) {
+        self.heroImageName = heroImageName
+        self.titleText = titleText
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
 
 extension OnboardingViewController {
     private func style(){
+        view.backgroundColor = .systemBackground
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
         
-        imageView.image = UIImage(named: "delorean")
+        imageView.image = UIImage(named: heroImageName)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Welcome new Baranc Devil Welcome new Baranc Devil Welcome new Baranc Devil Welcome new Baranc Devil"
+        label.text = titleText
         label.font = .preferredFont(forTextStyle: .title3)
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
