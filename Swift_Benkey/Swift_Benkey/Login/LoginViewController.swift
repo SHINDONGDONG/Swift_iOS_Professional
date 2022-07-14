@@ -84,6 +84,14 @@ extension LoginViewController {
         view.endEditing(true)
         errorMessage.isHidden = true
         login()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            let vc = OnboardingContainerViewController()
+//            navigationController?.pushViewController(vc, animated: true)
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .flipHorizontal
+            self?.present(vc, animated: true, completion: nil)
+            
+        }
     }
     
     private func login() {
