@@ -34,6 +34,28 @@ class LoginViewController: UIViewController {
         return error
     }()
     
+    let descriptionLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Your Benkey My Mind All right Cool Your Benkey My Mind All right Cool Your Benkey My Mind All right Cool"
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontForContentSizeCategory = true
+        label.font = .preferredFont(forTextStyle: .title3)
+        return label
+    }()
+    
+    let titleLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Benkey"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
     var username: String? {
         return loginView.usernameTextField.text
     }
@@ -100,6 +122,8 @@ extension LoginViewController {
         view.addSubview(loginView)
         view.addSubview(signButton)
         view.addSubview(errorMessage)
+        view.addSubview(descriptionLabel)
+        view.addSubview(titleLabel)
         
         //layout 을 active시켜준다.
         //login View
@@ -124,6 +148,21 @@ extension LoginViewController {
             errorMessage.trailingAnchor.constraint(equalTo: signButton.trailingAnchor),
             
         ])
+        //descriptionLabel
+        NSLayoutConstraint.activate([
+            loginView.topAnchor.constraint(equalToSystemSpacingBelow: descriptionLabel.bottomAnchor, multiplier: 3),
+            descriptionLabel.leadingAnchor.constraint(equalTo: loginView.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: loginView.trailingAnchor),
+        ])
+        
+        //title Label
+        NSLayoutConstraint.activate([
+            descriptionLabel.topAnchor.constraint(equalToSystemSpacingBelow: titleLabel.bottomAnchor, multiplier: 3),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+
+        ])
+
     }
     
 }
