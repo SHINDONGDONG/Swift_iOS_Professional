@@ -59,23 +59,31 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     @objc func signinTapped(sender: UIButton) {
+        view.endEditing(true)
         errorMessage.isHidden = true
         login()
     }
     
     private func login() {
-        guard let username = username,!username.isEmpty, let password = password,!password.isEmpty else {
-            //비어있을 때 아래의 메세지를
-            configureView(withMessage: "절대로 두개중 하나가 비어있으면 안됩니다.")
+        //usernmae passwordを受け取ってEmptyか検証し空ではなければデータを格納、空の場合ErrorMessageを出力
+        guard let username = username, !username.isEmpty, let password = password,!password.isEmpty else {
+            configureView(withMessage: "UsernameもしくはPasswordを入力してください。")
             return
         }
-            //username과 password가 일치하면 signbutton에 indicator를 돌린다.
-            if username == "Kevin" && password == "1234" {
-                signButton.configuration?.showsActivityIndicator = true
-            } else {
-                //일치하지 않으면 메세지를 출력
-                configureView(withMessage: "User name 혹은 Password를 확인해주세요.")
-            }
+        
+        //Username or Passwordが間違っているときError Messageを出力
+        if username == "kevin" && password == "kevin" {
+            signButton.configuration?.showsActivityIndicator = true
+        } else {
+            configureView(withMessage: "UsernameもしくはPasswordをご確認ください。")
+        }
+        
+        //Username or Passwordが５桁より短い場合出力
+        if username.count < 4 {
+            configureView(withMessage: "Usernameは5桁以上必須")
+        }else if password.count < 4 {
+            configureView(withMessage: "Passwordは5桁以上必須")
+        }
     }
     
      private func configureView(withMessage  message: String) {

@@ -13,6 +13,8 @@ class LoginView: UIView {
         let textfield = UITextField()
         textfield.placeholder = "Username"
         textfield.translatesAutoresizingMaskIntoConstraints = false
+        textfield.keyboardType = .asciiCapable
+        textfield.autocorrectionType = .no
         return textfield
     }()
     
