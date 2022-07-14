@@ -91,7 +91,7 @@ extension OnboardingContainerViewController: UIPageViewControllerDataSource {
     //preview
     private func getPreviousViewController(from viewController: UIViewController) -> UIViewController? {
         guard let index = pages.firstIndex(of: viewController), index - 1 >= 0 else { return nil }
-        currentVC = pages[index - 2]
+        currentVC = pages[index - 1]
         return pages[index - 1]
     }
 
