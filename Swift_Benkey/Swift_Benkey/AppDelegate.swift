@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //LoginViewController를 생성한다
     let loginViewController = LoginViewController()
     let onboardingContainerViewController = OnboardingContainerViewController()
-    
+    let dummyViewController = DummyViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -28,39 +28,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loginViewController.delegate = self
         
         onboardingContainerViewController.delegate = self
+        
+        dummyViewController.logoutDelegate = self
         //루트뷰를 적용해준다.
-        window?.rootViewController = onboardingContainerViewController
+        window?.rootViewController = loginViewController
         
         return true
     }
 }
 //appdelegate에서 적용가능하게 delegate를 선언해준다.
-extension AppDelegate:LoginViewControllerDelegate, OnboardingContainerViewControllerDelegate {
+extension AppDelegate:LoginViewControllerDelegate, OnboardingContainerViewControllerDelegate, logoutDelegate {
+    func didLogout() {
+        setRootViewController(loginViewController)
+    }
     func didFinishiOnboarding() {
-        print("foo - Did Onobarding")
+        setRootViewController(dummyViewController)
+    }
+    func didLogin() {
+        setRootViewController(onboardingContainerViewController)
     }
     
-    func didLogin() {
-        print("foo - did Login")
-    }
-//
-//    @objc func nextTapped(_ sender: UIButton) {
-//        guard let nextVC = getNextViewController(from: currentVC) else { return }
-//        pageViewController.setViewControllers([nextVC], direction: .forward, animated: true, completion: nil)
-//    }
-//
-//    @objc func backTapped(_ sender: UIButton) {
-//        guard let previousVC = getPreviousViewController(from: currentVC) else { return }
-//        pageViewController.setViewControllers([previousVC], direction: .reverse, animated: true, completion: nil)
-//    }
-//
-//    @objc func closeTapped(_ sender: UIButton) {
-//        delegate?.didFinishOnboarding()
-//    }
-//
-//    @objc func doneTapped(_ sender: UIButton) {
-//        delegate?.didFinishOnboarding()
-//    }
-//
-//
+    
 }
+
+extension AppDelegate {
+    
+    func setRootViewController(_ vc:UIViewController, animated: Bool = true) {
+        guard animated, let widown = self.window else {
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+            return
+        }
+        widown.rootViewController = vc
+        widown.makeKeyAndVisible()
+        UIView.transition(with: widown, duration: 0.7, options: .transitionCrossDissolve, animations: nil,completion: nil )
+    }
+}
+

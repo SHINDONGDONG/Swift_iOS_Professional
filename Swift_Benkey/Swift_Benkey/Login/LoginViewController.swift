@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol logoutDelegate: AnyObject {
+    func didLogout()
+}
+
 protocol LoginViewControllerDelegate: AnyObject {
     func didLogin()
 }
@@ -76,6 +80,13 @@ class LoginViewController: UIViewController {
         style()
         layout()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        signButton.configuration?.showsActivityIndicator = false
+        loginView.usernameTextField.text = nil
+        loginView.passwordTextField.text = nil
+    }
 
     //MARK: - Configures
 
@@ -104,9 +115,10 @@ extension LoginViewController {
         }
         
         //Username or Passwordが間違っているときError Messageを出力
-        if username == "kevin" && password == "kevin" {
+        if username == "Kevin" && password == "kevin" {
             signButton.configuration?.showsActivityIndicator = true
             delegate?.didLogin()
+            
         } else {
             configureView(withMessage: "UsernameもしくはPasswordをご確認ください。")
         }
