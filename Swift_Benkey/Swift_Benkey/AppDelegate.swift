@@ -12,8 +12,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     var window: UIWindow?
-
-    
     //LoginViewController를 생성한다
     let loginViewController = LoginViewController()
     let onboardingContainerViewController = OnboardingContainerViewController()
@@ -42,10 +40,18 @@ extension AppDelegate:LoginViewControllerDelegate, OnboardingContainerViewContro
         setRootViewController(loginViewController)
     }
     func didFinishiOnboarding() {
+        //onboard를 끝내고 dummy로 갈때 hasOnboard를 true로 변경
+        LocalState.hasOnboared = true
         setRootViewController(dummyViewController)
     }
     func didLogin() {
-        setRootViewController(onboardingContainerViewController)
+        //로그인화면에서 onboard 상태를 확인하고 화면전환을시킨다
+        
+        if LocalState.hasOnboared {
+            setRootViewController(dummyViewController)
+        } else {
+            setRootViewController(onboardingContainerViewController)
+        }
     }
     
     
