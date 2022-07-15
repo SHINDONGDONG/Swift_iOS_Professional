@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol LoginViewControllerDelegate: AnyObject {
+    func didLogin()
+}
+
 class LoginViewController: UIViewController {
 
+    weak var delegate: LoginViewControllerDelegate?
+    
     //MARK: - Properties
     //만들었던 기본적인 loginview를 인스턴스화 시킨다.
     let loginView = LoginView()
@@ -64,10 +70,6 @@ class LoginViewController: UIViewController {
         return loginView.passwordTextField.text
     }
     
-
-    
-    
-    
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,14 +86,14 @@ extension LoginViewController {
         view.endEditing(true)
         errorMessage.isHidden = true
         login()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            let vc = OnboardingContainerViewController()
-//            navigationController?.pushViewController(vc, animated: true)
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .flipHorizontal
-            self?.present(vc, animated: true, completion: nil)
-            
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+//            let vc = OnboardingContainerViewController()
+////            navigationController?.pushViewController(vc, animated: true)
+//            vc.modalPresentationStyle = .fullScreen
+//            vc.modalTransitionStyle = .flipHorizontal
+//            self?.present(vc, animated: true, completion: nil)
+//
+//        }
     }
     
     private func login() {
@@ -104,6 +106,7 @@ extension LoginViewController {
         //Username or Passwordが間違っているときError Messageを出力
         if username == "kevin" && password == "kevin" {
             signButton.configuration?.showsActivityIndicator = true
+            delegate?.didLogin()
         } else {
             configureView(withMessage: "UsernameもしくはPasswordをご確認ください。")
         }
