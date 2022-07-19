@@ -14,9 +14,14 @@ extension UIViewController {
         let statusBarSize = UIApplication.shared.statusBarFrame.size //바 사이즈
         let frame = CGRect(origin: .zero, size: statusBarSize) //BarFrame
         let statusbarView = UIView(frame: frame) //UIView의 Frame을 적용
-        
         statusbarView.backgroundColor = appColor
         view.addSubview(statusbarView)
+//
+//        let navBarAppearance = UINavigationBarAppearance()
+//        navBarAppearance.configureWithTransparentBackground() // to hide Navigation Bar Line also
+//        navBarAppearance.backgroundColor = appColor
+//        UINavigationBar.appearance().standardAppearance = navBarAppearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
     }
     //기본 TabBar 이미지 & 스타일
     func setTabBarImage(imageName: String, title: String) {

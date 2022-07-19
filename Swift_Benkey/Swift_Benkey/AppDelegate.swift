@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //LoginViewController를 생성한다
     let loginViewController = LoginViewController()
     let onboardingContainerViewController = OnboardingContainerViewController()
-    let dummyViewController = DummyViewController()
+//    let dummyViewController = DummyViewController()
+    let mainViewController = MainViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -28,10 +29,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loginViewController.delegate = self
         
         onboardingContainerViewController.delegate = self
+//        dummyViewController.logoutDelegate = self
         
-        dummyViewController.logoutDelegate = self
+        let vc = mainViewController
+        vc.setStatusBar()
+        
         //루트뷰를 적용해준다.
-        window?.rootViewController = MainViewController()
+        window?.rootViewController = vc
+        
+//        window?.rootViewController = MainViewController()
+        
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().backgroundColor = appColor
+        UIScrollView.appearance().bounces = false
         
         return true
     }
@@ -44,13 +54,13 @@ extension AppDelegate:LoginViewControllerDelegate, OnboardingContainerViewContro
     func didFinishiOnboarding() {
         //onboard를 끝내고 dummy로 갈때 hasOnboard를 true로 변경
         LocalState.hasOnboared = true
-        setRootViewController(dummyViewController)
+        setRootViewController(mainViewController)
     }
     func didLogin() {
         //로그인화면에서 onboard 상태를 확인하고 화면전환을시킨다
         
         if LocalState.hasOnboared {
-            setRootViewController(dummyViewController)
+            setRootViewController(mainViewController)
         } else {
             setRootViewController(onboardingContainerViewController)
         }
