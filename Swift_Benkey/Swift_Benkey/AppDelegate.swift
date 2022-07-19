@@ -7,6 +7,8 @@
 
 import UIKit
 
+let appColor: UIColor = .systemTeal
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -29,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         dummyViewController.logoutDelegate = self
         //루트뷰를 적용해준다.
-        window?.rootViewController = loginViewController
+        window?.rootViewController = MainViewController()
         
         return true
     }
