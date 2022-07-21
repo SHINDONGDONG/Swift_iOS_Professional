@@ -27,26 +27,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .systemBackground
         //loginviewcontroller를 delegate인걸 알려준다.
         loginViewController.delegate = self
-        
         onboardingContainerViewController.delegate = self
 //        dummyViewController.logoutDelegate = self
         
-        let vc = mainViewController
-        vc.setStatusBar()
-        
-        //루트뷰를 적용해준다.
-        window?.rootViewController = vc
-        
-//        window?.rootViewController = MainViewController()
-        
+
+     displayLogin()
+        return true
+    }
+    private func displayLogin() {
+        setRootViewController(loginViewController)
+    }
+    private func displayNextScreen() {
+        //UserDefaults에서 hasonboard가 true일경우 mainviewcontroller로 이동한다.
+        if LocalState.hasOnboared {
+            prepMainView()
+            setRootViewController(mainViewController)
+        }else {
+            //한번도 onboarding을 가지않았을경우 onboarding으로 이동
+            setRootViewController(onboardingContainerViewController)
+        }
+    }
+    private func prepMainView(){
+        mainViewController.setStatusBar()
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().backgroundColor = appColor
         UIScrollView.appearance().bounces = false
-        
-        return true
     }
+    
 }
-//appdelegate에서 적용가능하게 delegate를 선언해준다.
+
+
 extension AppDelegate:LoginViewControllerDelegate, OnboardingContainerViewControllerDelegate, logoutDelegate {
     func didLogout() {
         setRootViewController(loginViewController)
@@ -54,16 +64,12 @@ extension AppDelegate:LoginViewControllerDelegate, OnboardingContainerViewContro
     func didFinishiOnboarding() {
         //onboard를 끝내고 dummy로 갈때 hasOnboard를 true로 변경
         LocalState.hasOnboared = true
+        prepMainView()
         setRootViewController(mainViewController)
     }
     func didLogin() {
         //로그인화면에서 onboard 상태를 확인하고 화면전환을시킨다
-        
-        if LocalState.hasOnboared {
-            setRootViewController(mainViewController)
-        } else {
-            setRootViewController(onboardingContainerViewController)
-        }
+        displayNextScreen()
     }
     
     
