@@ -121,7 +121,7 @@ extension LoginViewController {
         }
         
         //Username or Passwordが間違っているときError Messageを出力
-        if username == "1" && password == "1" {
+        if username == "Mincheol" && password == "123123" {
             signButton.configuration?.showsActivityIndicator = true
             delegate?.didLogin()
             
@@ -140,7 +140,24 @@ extension LoginViewController {
      private func configureView(withMessage  message: String) {
         errorMessage.isHidden = false
         errorMessage.text = message
+        shakeButton()
     }
+    private func shakeButton() {
+        let animation = CAKeyframeAnimation()
+        //움직일 방향. y세로 x가로
+        animation.keyPath = "position.x"
+        //왼쪽으로는 -, 오른쪽으로는 양수
+        animation.values = [0,10,-10,10,0 ]
+        //value와 맞춰진것이다 10일때 0.16에서,-10은 0.5에서 등등
+        animation.keyTimes = [0, 0.16, 0.5, 0.83, 1]
+        //0.5초의 시간으로 현 애니메이션을 실행시킨다
+        animation.duration = 0.5
+        //애니메이션을 활성화 시킨다.
+        animation.isAdditive = true
+        //signbutton 의 layer에 추가를 시켜주어야하고 forkey는 임의임
+        signButton.layer.add(animation,forKey: "shake")
+    }
+    
     
     private func style() {
         //로그인뷰를 자유자재로 움직일 수 있도록 false해줌.
