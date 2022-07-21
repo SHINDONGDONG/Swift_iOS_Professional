@@ -24,6 +24,7 @@ class LoginView: UIView {
         textfield.translatesAutoresizingMaskIntoConstraints = false
         //password로 SecureTextEntry임.
         textfield.isSecureTextEntry = true
+        textfield.enablePasswordToggle()
         return textfield
     }()
     

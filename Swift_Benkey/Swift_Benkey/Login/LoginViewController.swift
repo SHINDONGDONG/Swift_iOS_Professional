@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
     //만들었던 기본적인 loginview를 인스턴스화 시킨다.
     let loginView = LoginView()
     
-    let signButton: UIButton = {
+    lazy var signButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Sign In", for: [])
@@ -115,7 +115,7 @@ extension LoginViewController {
         }
         
         //Username or Passwordが間違っているときError Messageを出力
-        if username == "Kevin" && password == "kevin" {
+        if username == "1" && password == "1" {
             signButton.configuration?.showsActivityIndicator = true
             delegate?.didLogin()
             

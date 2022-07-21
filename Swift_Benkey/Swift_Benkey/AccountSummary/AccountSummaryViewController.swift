@@ -13,12 +13,25 @@ class AccountSummaryViewController: UIViewController {
     var accounts: [AccountSummaryTableViewCell.ViewModel] = []
 
     let tableView = UITableView()
-
+    
+    //logoutbarbutton생성
+    lazy var logoutBarButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
+        button.tintColor = .label
+        return button
+    }()
+    
+    //navigation rightbarbuttonitem을 넣어준다.
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem = logoutBarButtonItem
+    }
+    
 
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        setupNavigationBar()
     }
 
     // MARK: - Configures
@@ -101,4 +114,13 @@ extension AccountSummaryViewController {
         accounts.append(investment1)
         accounts.append(investment2)
     }
+}
+
+
+//MARK: - Actions
+extension AccountSummaryViewController {
+    @objc func logoutTapped(){
+        NotificationCenter.default.post(name: .logout, object: nil)
+    }
+
 }

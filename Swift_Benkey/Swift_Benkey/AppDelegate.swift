@@ -28,12 +28,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //loginviewcontroller를 delegate인걸 알려준다.
         loginViewController.delegate = self
         onboardingContainerViewController.delegate = self
-//        dummyViewController.logoutDelegate = self
+        //        dummyViewController.logoutDelegate = self
         
-
-     displayLogin()
+        
+        registerForNotifications()
+        
+        displayLogin()
         return true
     }
+    
+    private func registerForNotifications() {
+        //notification은 자기자신을 감시할것이다. 감시할때 selector가 실행되면
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didLogout),
+            name: .logout,
+            object: nil)
+    }
+    
+    
     private func displayLogin() {
         setRootViewController(loginViewController)
     }
@@ -58,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 extension AppDelegate:LoginViewControllerDelegate, OnboardingContainerViewControllerDelegate, logoutDelegate {
-    func didLogout() {
+    @objc func didLogout() {
         setRootViewController(loginViewController)
     }
     func didFinishiOnboarding() {
