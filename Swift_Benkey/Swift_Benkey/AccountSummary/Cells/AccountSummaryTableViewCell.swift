@@ -85,7 +85,7 @@ extension AccountSummaryTableViewCell {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = .preferredFont(forTextStyle: .body)
 //        nameLabel.text = "Account Name"
-        nameLabel.adjustsFontSizeToFitWidth = true
+        nameLabel.adjustsFontSizeToFitWidth  = true
         
         contentView.addSubview(balanceStackView)
         balanceStackView.addArrangedSubview(balanceLabel)

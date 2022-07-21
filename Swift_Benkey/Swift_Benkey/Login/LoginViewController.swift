@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
         return error
     }()
     
-    let descriptionLabel: UILabel = {
+    lazy var descriptionLabel: UILabel = {
        let label = UILabel()
         label.text = "Your Benkey My Mind All right Cool Your Benkey My Mind All right Cool Your Benkey My Mind All right Cool"
         label.numberOfLines = 0
@@ -63,6 +63,7 @@ class LoginViewController: UIViewController {
 //        label.font = .systemFont(ofSize: 30, weight: .bold)
         label.font = .preferredFont(forTextStyle: .largeTitle)
         label.adjustsFontForContentSizeCategory = true
+        label.alpha = 0
         return label
     }()
     
@@ -74,11 +75,18 @@ class LoginViewController: UIViewController {
         return loginView.passwordTextField.text
     }
     
+    var leadingEdgeOnScreen: CGFloat = 16
+    var leadingEdgeOffScreen: CGFloat = -1000
+    
+    var titleLeadingAnchor: NSLayoutConstraint?
+    var subtitleLeadingAnchor: NSLayoutConstraint?
+    
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
         layout()
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -86,6 +94,12 @@ class LoginViewController: UIViewController {
         signButton.configuration?.showsActivityIndicator = false
         loginView.usernameTextField.text = nil
         loginView.passwordTextField.text = nil
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animate()
     }
 
     //MARK: - Configures
@@ -97,14 +111,6 @@ extension LoginViewController {
         view.endEditing(true)
         errorMessage.isHidden = true
         login()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-//            let vc = OnboardingContainerViewController()
-////            navigationController?.pushViewController(vc, animated: true)
-//            vc.modalPresentationStyle = .fullScreen
-//            vc.modalTransitionStyle = .flipHorizontal
-//            self?.present(vc, animated: true, completion: nil)
-//
-//        }
     }
     
     private func login() {
@@ -181,12 +187,48 @@ extension LoginViewController {
         //title Label
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalToSystemSpacingBelow: titleLabel.bottomAnchor, multiplier: 3),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-
+            titleLabel.trailingAnchor.constraint(equalTo: loginView.trailingAnchor),
         ])
+        
+        titleLeadingAnchor = titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingEdgeOffScreen)
+        titleLeadingAnchor?.isActive = true
+        
+        subtitleLeadingAnchor = descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingEdgeOffScreen)
+        subtitleLeadingAnchor?.isActive = true
 
     }
     
 }
 
+//MARK: - Animate
+extension LoginViewController {
+    private func animate() {
+        let duration = 0.8
+        
+        //애니메이터 2초의 시간으로 .easeInOut스타일로 애니메이팅이 된다.
+        let animator1 = UIViewPropertyAnimator(duration: duration, curve: .easeInOut) {
+        //titleLeadingAncor의 constant가 leading Onscreen 의 위치에 간다.
+        self.titleLeadingAnchor?.constant = self.leadingEdgeOnScreen
+        //view가 자동으로 레이아웃하거나 업데이트한다면 엔진에대한 신호이다.
+        //layoutIfNeeded!!!!!!!!!!중요
+        self.view.layoutIfNeeded()
+        }
+        animator1.startAnimation()
+        
+        //애니메이터 2초의 시간으로 .easeInOut스타일로 애니메이팅이 된다.
+        let animator2 = UIViewPropertyAnimator(duration: duration, curve: .easeInOut) {
+        //titleLeadingAncor의 constant가 leading Onscreen 의 위치에 간다.
+        self.subtitleLeadingAnchor?.constant = self.leadingEdgeOnScreen
+        //view가 자동으로 레이아웃하거나 업데이트한다면 엔진에대한 신호이다.
+        //layoutIfNeeded!!!!!!!!!!중요
+        self.view.layoutIfNeeded()
+        }
+        animator2.startAnimation(afterDelay: 0.2)
+        
+        let animator3 = UIViewPropertyAnimator(duration: duration*2, curve: .easeInOut) {
+            self.titleLabel.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+        animator3.startAnimation(afterDelay: 0.2)
+    }
+}
