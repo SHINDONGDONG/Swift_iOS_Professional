@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B3A6E742899DA7600188509 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3A6E732899DA7600188509 /* Date+Utils.swift */; };
+		9B3A6E76289B27A400188509 /* AccountSummaryViewController+Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3A6E75289B27A400188509 /* AccountSummaryViewController+Networking.swift */; };
 		9B56C080287FE6B20092257D /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C07F287FE6B20092257D /* OnboardingContainerViewController.swift */; };
 		9B56C082288006B40092257D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56C081288006B40092257D /* OnboardingViewController.swift */; };
 		9B74E662287E7A8F00499668 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B74E661287E7A8F00499668 /* AppDelegate.swift */; };
@@ -44,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B3A6E732899DA7600188509 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		9B3A6E75289B27A400188509 /* AccountSummaryViewController+Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountSummaryViewController+Networking.swift"; sourceTree = "<group>"; };
 		9B56C07F287FE6B20092257D /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		9B56C081288006B40092257D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		9B74E65E287E7A8F00499668 /* Swift_Benkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swift_Benkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +164,7 @@
 				9B7C243028866BDD0079E21C /* AccountSummaryViewController.swift */,
 				9BE1555728868FE400CF2FBA /* Cells */,
 				9BE1555628868FDF00CF2FBA /* Header */,
+				9B3A6E75289B27A400188509 /* AccountSummaryViewController+Networking.swift */,
 			);
 			path = AccountSummary;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				9B848EE12887E0E9006694F9 /* CurencyFormatter.swift */,
 				9B848EF228890E99006694F9 /* NSNotificationName.swift */,
 				9B848EF428891231006694F9 /* UITextField+Utils.swift */,
+				9B3A6E732899DA7600188509 /* Date+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -338,8 +344,10 @@
 				9B56C082288006B40092257D /* OnboardingViewController.swift in Sources */,
 				9B848EE02887E01B006694F9 /* DecimalUtils.swift in Sources */,
 				9B74E662287E7A8F00499668 /* AppDelegate.swift in Sources */,
+				9B3A6E76289B27A400188509 /* AccountSummaryViewController+Networking.swift in Sources */,
 				9B848EF328890E99006694F9 /* NSNotificationName.swift in Sources */,
 				9B848EF828893797006694F9 /* ShakeyBellView.swift in Sources */,
+				9B3A6E742899DA7600188509 /* Date+Utils.swift in Sources */,
 				9B56C080287FE6B20092257D /* OnboardingContainerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

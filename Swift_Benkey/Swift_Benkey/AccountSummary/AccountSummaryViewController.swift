@@ -10,8 +10,18 @@ import UIKit
 class AccountSummaryViewController: UIViewController {
 
     // MARK: - Properties
-    var accounts: [AccountSummaryTableViewCell.ViewModel] = []
-
+    //accountsummaryheaderview를 넣어준다.
+    let headerView = AccountSummaryHeaderView(frame: .zero)
+    
+    //request models
+    var profile: Profile?
+    
+    //View Models
+    var headerViewModel = AccountSummaryHeaderView.ViewModel(
+        welcomeMessage: "Welcome", name: "", date: Date())
+    var accountCellViewModels: [AccountSummaryTableViewCell.ViewModel] = []
+    
+    
     let tableView = UITableView()
     
     //logoutbarbutton생성
@@ -42,21 +52,21 @@ extension AccountSummaryViewController {
     private func setUp(){
         setupTableView()
         setupTableHeaderView()
-        fetchData()
+//        fetchData()
+        fetchDataAndLoadViews()
     }
     
     private func setupTableHeaderView() {
-        //accountsummaryheaderview를 넣어준다.
-        let header = AccountSummaryHeaderView(frame: .zero)
+        
         //size에 header.systemlayoutsizefitting을 compress로 넣어줌.
-        var size = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        var size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         //size.width를 현재 단말의 width로 넣어준다.
         size.width = UIScreen.main.bounds.width
         //header 사이즈에 size를 넣는다.
-        header.frame.size = size
+        headerView.frame.size = size
         
         //tableview의 tableheaderview 에 header를 넣어준다.
-        tableView.tableHeaderView = header
+        tableView.tableHeaderView = headerView
     }
     
 
@@ -80,16 +90,16 @@ extension AccountSummaryViewController {
 
 extension AccountSummaryViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return accounts.count
+        return accountCellViewModels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //accounts가 비어있다면 UITableViewCell을 리턴해주고 끝낸다.
-        guard !accounts.isEmpty else { return UITableViewCell() }
+        guard !accountCellViewModels.isEmpty else { return UITableViewCell() }
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryTableViewCell.reuseID, for: indexPath) as? AccountSummaryTableViewCell else { return UITableViewCell() }
         //account에 viewmodel을 하나씩 돌려서 넣어준다.
-        let account = accounts[indexPath.row]
+        let account = accountCellViewModels[indexPath.row]
         //viewmodel을 넣어서 cell화면에 보내준다.
         cell.configure(vm: account)
         return cell
@@ -107,14 +117,39 @@ extension AccountSummaryViewController {
         let investment1 = AccountSummaryTableViewCell.ViewModel(accountType: .Investment, accountName: "Tax-Free Server",balance: 52.2)
         let investment2 = AccountSummaryTableViewCell.ViewModel(accountType: .Investment, accountName: "Growth Fund", balance: 15000.00)
         
-        accounts.append(savings)
-        accounts.append(chequing)
-        accounts.append(visa)
-        accounts.append(masterCard)
-        accounts.append(investment1)
-        accounts.append(investment2)
+        accountCellViewModels.append(savings)
+        accountCellViewModels.append(chequing)
+        accountCellViewModels.append(visa)
+        accountCellViewModels.append(masterCard)
+        accountCellViewModels.append(investment1)
+        accountCellViewModels.append(investment2)
     }
 }
+// MARK: - Networking
+extension AccountSummaryViewController {
+    private func fetchDataAndLoadViews() {
+        
+        fetchProfile(forUserId: "1") { result in
+            switch result {
+            case .success(let profile):
+                self.profile = profile
+                self.configureTableHeaderView(with: profile)
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        fetchData()
+    }
+    
+    private func configureTableHeaderView(with profile: Profile) {
+        let vm = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Good morning,",
+                                                    name: profile.firstName,
+                                                    date: Date())
+        headerView.configure(viewModel: vm)
+    }
+}
+
 
 
 //MARK: - Actions

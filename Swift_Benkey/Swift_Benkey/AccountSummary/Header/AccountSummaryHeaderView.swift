@@ -8,6 +8,20 @@ import UIKit
 class AccountSummaryHeaderView: UIView {
 
     //MARK: - Properties
+    @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    struct ViewModel {
+        let welcomeMessage: String
+        let name: String
+        let date: Date
+        
+        var dateFormatter: String {
+            return date.monthDayYearString
+        }
+    }
+    
     @IBOutlet var contentView: UIView!
     
     let shakeBell = ShakeyBellView()
@@ -54,5 +68,10 @@ class AccountSummaryHeaderView: UIView {
             shakeBell.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+ 
+    func configure(viewModel: ViewModel) {
+        welcomeLabel.text = viewModel.welcomeMessage
+        nameLabel.text = viewModel.name
+        dateLabel.text = viewModel.dateFormatter
+    }
 }
